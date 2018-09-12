@@ -59,15 +59,15 @@ function isPrototypeOf(prototypeObject, targetObject) {
             if(Object.getPrototypeOf(targetObject) === prototypeObject) {
                 return true;
             } else {
-                // If we have not reached end of prototype chain, continue to search prototype chain
+                // Continue to recursively search through targetObject prototype chain until prototype value is null
                 if(Object.getPrototypeOf(targetObject) !== null) {
                     return isPrototypeOf(prototypeObject, Object.getPrototypeOf(targetObject));
-                // If we have reached end of prototype chain and not matched, return false
+                // If we have reached end of prototype chain with no match, return false
                 } else {
                     return false;
                 }
             }
-        // Return false if targetObject is not an object as defined by ECMAScript language types
+        // Return false if targetObject is null, undefined, or not an object as defined by ECMAScript language type
         } else {
             return false;
         }
