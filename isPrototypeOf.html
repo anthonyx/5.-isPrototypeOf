@@ -44,35 +44,54 @@
 // }
 
 function isPrototypeOf(prototypeObject, targetObject) {
-    // Check if targetObject is null, undefined, or any language type other than object
-    if(targetObject !== null &&
-        targetObject !== undefined && 
-        typeof targetObject !== 'string' && 
-        typeof targetObject !== 'number' && 
-        typeof targetObject !== 'boolean' && 
-        typeof targetObject !== 'symbol') {
-        // If prototypeObject is prototype of targetObject, return true
-        if(Object.getPrototypeOf(targetObject) === prototypeObject) {
-            return true;
-        } else {
-            // If we have not reached end of prototype chain, continue to search prototype chain
-            if(Object.getPrototypeOf(targetObject) !== null) {
-                return isPrototypeOf(prototypeObject, Object.getPrototypeOf(targetObject));
-            // If we have reached end of prototype chain and not matched, return false
-            } else {
-                return false;
-            }
-        }
-    // Return false if targetObject is not an object as defined by ECMAScript language types
+    // Check if prototypeObject is null or undefined
+    if(prototypeObject === null || prototypeObject === undefined) {
+        throw new TypeError('prototypeObject is null or undefined');
     } else {
-        return false;
+        // Check if targetObject is null, undefined, or any language type other than object
+        if(targetObject !== null &&
+            targetObject !== undefined && 
+            typeof targetObject !== 'string' && 
+            typeof targetObject !== 'number' && 
+            typeof targetObject !== 'boolean' && 
+            typeof targetObject !== 'symbol') {
+            // If prototypeObject is prototype of targetObject, return true
+            if(Object.getPrototypeOf(targetObject) === prototypeObject) {
+                return true;
+            } else {
+                // If we have not reached end of prototype chain, continue to search prototype chain
+                if(Object.getPrototypeOf(targetObject) !== null) {
+                    return isPrototypeOf(prototypeObject, Object.getPrototypeOf(targetObject));
+                // If we have reached end of prototype chain and not matched, return false
+                } else {
+                    return false;
+                }
+            }
+        // Return false if targetObject is not an object as defined by ECMAScript language types
+        } else {
+            return false;
+        }
     }
+    
 }
 
 
 
 // Tests
 tests({
+    'It should throw a TypeError if prototypeObject is null or undefined.': function() {
+        try {
+            isPrototypeOf(null);
+        } catch(e) {
+            eq(e instanceof TypeError, true);
+        }
+
+        try {
+            isPrototypeOf(undefined);
+        } catch(e) {
+            eq(e instanceof TypeError, true);
+        }
+    },
     'It should return a Boolean value.': function() {
         var randomObject = {};
         eq(typeof isPrototypeOf(randomObject), 'boolean');
