@@ -44,11 +44,11 @@
 // }
 
 function isPrototypeOf(prototypeObject, targetObject) {
-    // Check if prototypeObject is null or undefined
+    // Throw error if prototypeObject is null or undefined
     if(prototypeObject === null || prototypeObject === undefined) {
         throw new TypeError('prototypeObject is null or undefined');
     } else {
-        // Check if targetObject is null, undefined, or any language type other than object
+        // Check if targetObject is null, undefined, or any ECMAScript language type other than object
         if(targetObject !== null &&
             targetObject !== undefined && 
             typeof targetObject !== 'string' && 
